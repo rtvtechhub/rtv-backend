@@ -21,6 +21,7 @@ public class User implements UserDetails {
     private Gender gender;
     private Integer age;
     private List<String> authorities;
+    private UserWallet userWallet;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

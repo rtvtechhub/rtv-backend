@@ -1,5 +1,6 @@
 package com.rtvnewsnetwork.user.service;
 
+import com.rtvnewsnetwork.transaction.model.TransactionModel;
 import com.rtvnewsnetwork.user.model.User;
 import com.rtvnewsnetwork.user.model.UserDto;
 import com.rtvnewsnetwork.user.repository.UserRepository;
@@ -79,4 +80,14 @@ public class UserServiceImpl implements UserService , UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
     }
+
+    @Override
+    public boolean updateUserWallet(TransactionModel transactionModel) {
+        return userRepository.updateWallet(
+                transactionModel.getUserId(),
+                transactionModel.getTransactionType(),
+                transactionModel.getAmount()
+        );
+    }
+
 }
