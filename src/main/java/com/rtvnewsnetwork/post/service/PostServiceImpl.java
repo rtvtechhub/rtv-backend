@@ -226,11 +226,11 @@ public class PostServiceImpl implements PostService {
         Map<String, Object> eventData = new HashMap<>();
         eventData.put("title", postModel.getTitle());
         eventData.put("description", postModel.getDescription());
-        String imgUrl = imageBaseUrl + (postModel.getBannerImage() != null && postModel.getBannerImage().getPath() != null
-                ? postModel.getBannerImage().getPath()
-                : postModel.getThumbnail());
-        eventData.put("imageUrl", imgUrl);
-        eventData.put("path", "/posts/" + response.getId());
+//        String imgUrl = imageBaseUrl + (postModel.getBannerImage() != null && postModel.getBannerImage().getPath() != null
+//                ? postModel.getBannerImage().getPath()
+//                : postModel.getVideo().getFile().thumbnail.getPath());
+//        eventData.put("imageUrl", imgUrl);
+//        eventData.put("path", "/posts/" + response.getId());
 
 //        produceEventToKafka(Constants.NEW_POST, null, KafkaTopicConfig.GENERIC_EVENT_CHANNEL, eventData);
 //
