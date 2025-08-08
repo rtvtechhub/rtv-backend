@@ -31,8 +31,7 @@ public class PostModel {
 
     @LastModifiedDate
     private Instant updatedAt;
-    private RelativePath thumbnail=null;
-    private RelativePath videoURL=null;
+    private Video video;
 
     @Transient
     @JsonProperty("liked")
