@@ -1,0 +1,21 @@
+package com.rtvnewsnetwork.event.model;
+
+public enum EventType {
+    SIGN_UP,
+    COMMENT_ON_POST,
+    POST_LIKE,
+    SHARE_POST,
+    REACT_TO_POST,
+    PARTICIPATE_IN_QUIZ,
+    QUIZ_REWARD,
+
+    DELETE_POST_COMMENT,
+    POST_DISLIKE,
+    NEW_POST,
+    USER_PROFILE_COMPLETE,
+    USER_PROFILE_COMPLETE_NOTIFICATION,
+    COIN_CREDIT,
+    COIN_DEBIT,
+    OTHERS,
+    REVIEW
+}
