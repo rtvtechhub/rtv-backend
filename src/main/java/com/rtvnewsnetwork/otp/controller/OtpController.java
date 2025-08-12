@@ -29,7 +29,7 @@ public class OtpController {
             @RequestParam(required = false, defaultValue = "") String apphash
     ) {
         try {
-            otpService.sendOtpViaFast2Sms(phoneNumber, apphash);
+            otpService.sendOtp(phoneNumber, apphash);
             return ResponseEntity.status(HttpStatus.OK).body("Code Sent");
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -42,7 +42,7 @@ public class OtpController {
             @RequestParam String otp
     ) {
         try {
-            User user = otpService.verifyOtpViaFast2Sms(phoneNumber, otp);
+            User user = otpService.verifyOtp(phoneNumber, otp);
             String jwtToken = jwtUtils.generateToken(user);
             String refreshToken = jwtUtils.generateRefreshToken(user);
 

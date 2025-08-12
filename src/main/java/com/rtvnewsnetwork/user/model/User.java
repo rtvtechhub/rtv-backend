@@ -1,5 +1,7 @@
 package com.rtvnewsnetwork.user.model;
 
+import com.rtvnewsnetwork.config.model.UploadedFile.RelativePath;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,12 +18,14 @@ import java.util.Map;
 @Setter
 public class User implements UserDetails {
     private String id;
+    @NotBlank(message = "Phone number is required")
     private String phoneNumber;
     private String name;
     private String email;
     private String password;
     private Gender gender;
     private Integer age;
+    private RelativePath profileImage;
     private List<String> authorities;
     private UserWallet userWallet;
     private Map<String, String> fcmToken = new HashMap<>();

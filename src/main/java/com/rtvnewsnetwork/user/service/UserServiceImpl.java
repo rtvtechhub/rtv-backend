@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService , UserDetailsService {
@@ -44,8 +45,7 @@ public class UserServiceImpl implements UserService , UserDetailsService {
             newUser.setPhoneNumber(phoneNumber);
             newUser.setPassword(encodedPassword);
             newUser.setAuthorities(authorities);
-            userRepository.save(newUser);
-            return newUser;
+            return userRepository.save(newUser);
         }
 
     }
@@ -78,7 +78,15 @@ public class UserServiceImpl implements UserService , UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        if (username == null) {
+            throw new UsernameNotFoundException("Username is null");
+        }
+
+        Optional<User> userObj = userRepository.findByPhoneNumber(username);
+
+        return userObj.orElseThrow(() ->
+                new UsernameNotFoundException("User not found with phone number: " + username)
+        );
     }
 
     @Override
