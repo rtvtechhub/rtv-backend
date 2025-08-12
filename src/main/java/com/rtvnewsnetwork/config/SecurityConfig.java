@@ -24,13 +24,13 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final JwtTokenUtils jwtTokenProvider;
-    private final UserServiceImpl userService;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    public SecurityConfig(JwtTokenUtils jwtTokenProvider, UserServiceImpl userService) {
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.userService = userService;
+    // Constructor injection ensures Spring provides the managed bean
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -52,7 +52,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(
-                        new JwtAuthenticationFilter(),
+                        jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class
                 );
 

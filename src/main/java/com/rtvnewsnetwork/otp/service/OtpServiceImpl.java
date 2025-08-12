@@ -29,7 +29,7 @@ public class OtpServiceImpl implements OtpService {
 
     @Override
     public OtpResponse sendOtp(String phoneNumber, String apphash) throws OtpException {
-        String otpUrl = otpBaseUrl + "+91" + phoneNumber; // Consider appending apphash if API requires it
+        String otpUrl = otpBaseUrl + "+91" + phoneNumber+"/AUTOGEN2/OTP1"; // Consider appending apphash if API requires it
 
         try {
             ResponseEntity<OtpResponse> responseEntity =
@@ -68,7 +68,7 @@ public class OtpServiceImpl implements OtpService {
 
             if (responseEntity.getStatusCode() == HttpStatus.OK && response != null) {
                 if ("Success".equalsIgnoreCase(response.getStatus())) {
-                    return userService.findByUsernameElseCreate("+91$phoneNumber");
+                    return userService.findByUsernameElseCreate("+91"+phoneNumber);
                 } else {
                     throw new OtpException(response.getDetails() != null
                             ? response.getDetails()

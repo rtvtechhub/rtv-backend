@@ -100,6 +100,11 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
 		<!-- Apache Commons Lang - Utility functions -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -135,6 +140,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>rtvnewsnetwork</finalName>
 	</build>
 
 </project>

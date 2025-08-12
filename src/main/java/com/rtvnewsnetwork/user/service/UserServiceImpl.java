@@ -1,5 +1,6 @@
 package com.rtvnewsnetwork.user.service;
 
+import com.rtvnewsnetwork.common.exception.ResourceNotFoundException;
 import com.rtvnewsnetwork.transaction.model.TransactionModel;
 import com.rtvnewsnetwork.user.model.User;
 import com.rtvnewsnetwork.user.model.UserDto;
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService , UserDetailsService {
 
     @Override
     public User getUserById(String id) {
-        return userRepository.findById(id).orElseThrow(()->new UsernameNotFoundException("User not found with id: "+id));
+        return userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("User not found with id: "+id));
     }
 
     @Override
@@ -50,10 +51,7 @@ public class UserServiceImpl implements UserService , UserDetailsService {
 
     }
 
-    @Override
-    public User addUser(User user) {
-        return null;
-    }
+
 
     @Override
     public User updateUser(String id, UserDto userDto) {
@@ -67,6 +65,9 @@ public class UserServiceImpl implements UserService , UserDetailsService {
         }
         if(userDto.getEmail()!=null){
             user.setEmail(userDto.getEmail());
+        }
+        if(userDto.getProfileImage()!=null){
+            user.setProfileImage(userDto.getProfileImage());
         }
         return userRepository.save(user);
     }
@@ -85,7 +86,7 @@ public class UserServiceImpl implements UserService , UserDetailsService {
         Optional<User> userObj = userRepository.findByPhoneNumber(username);
 
         return userObj.orElseThrow(() ->
-                new UsernameNotFoundException("User not found with phone number: " + username)
+                new ResourceNotFoundException("User not found with phone number: " + username)
         );
     }
 
