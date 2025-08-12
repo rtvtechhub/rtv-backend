@@ -5,7 +5,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -22,6 +24,8 @@ public class User implements UserDetails {
     private Integer age;
     private List<String> authorities;
     private UserWallet userWallet;
+    private Map<String, String> fcmToken = new HashMap<>();
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

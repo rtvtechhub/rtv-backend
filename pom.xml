@@ -49,6 +49,11 @@
 			<artifactId>spring-kafka</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+			<version>9.2.0</version>
+		</dependency>
+		<dependency>
 			<groupId>io.github.otpless-tech.auth</groupId>
 			<artifactId>otpless-auth</artifactId>
 			<version>1.0.8</version>
