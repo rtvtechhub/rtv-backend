@@ -33,5 +33,8 @@ public class NotificationModel {
     @CreatedDate
     @Builder.Default
     private Instant createdDate = Instant.now();
+
+    public NotificationModel(String title, String description, String imageUrl, String logoUrl, String path, Comparable<? extends Comparable<?>> comparable) {
+    }
 }
 
