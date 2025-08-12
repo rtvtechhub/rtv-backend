@@ -184,7 +184,7 @@ public class NotificationServiceImpl implements NotificationService , EventPubli
             eventData.put("path", notificationDto.getPath());
         }
 
-        produceEventToKafka(EventType.NEW_POST, null, KafkaTopicConfig.GENERIC_EVENT_CHANNEL, eventData);
+        produceEventToKafka(EventType.NEW_POST, null, KafkaTopicConfig.NOTIFICATIONS_CHANNEL, eventData);
     }
 
     @Override
