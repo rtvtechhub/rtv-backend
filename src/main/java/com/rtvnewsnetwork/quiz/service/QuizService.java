@@ -24,5 +24,6 @@ public interface QuizService {
 
     QuizModel createQuiz(QuizModel quizModel);
 
+    QuizModel deleteQuiz(String id);
     void deleteQuizzes(List<String> quizIds);
 }

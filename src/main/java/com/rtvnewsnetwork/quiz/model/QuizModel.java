@@ -21,9 +21,9 @@ public class QuizModel {
     private List<QuizQuestion> questions;
     private QuizStatus status;
     private int rewardCoinsPerQuestion;
-    private ShareModel share;
-    private String shareUrl;
-
+//    private ShareModel share;
+//    private String shareUrl;
+    private QuizTypeEnum quizType;
     @CreatedDate
     private Instant createdAt;
 

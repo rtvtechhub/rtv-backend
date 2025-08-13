@@ -1,6 +1,7 @@
 package com.rtvnewsnetwork.quiz.repository;
 
 import com.mongodb.client.MongoClient;
+import com.rtvnewsnetwork.config.model.UploadedFile.RelativePath;
 import com.rtvnewsnetwork.quiz.model.UserStatsWithUsernameDto;
 import com.rtvnewsnetwork.quiz.service.QuizServiceImpl;
 import com.rtvnewsnetwork.user.model.User;
@@ -74,7 +75,8 @@ public class QuizAnswerRepositoryCustomImpl implements QuizAnswerRepositoryCusto
                                 "Unknown",
                                 stats.getInteger("totalCorrectAnswers", 0),
                                 stats.getInteger("totalQuestions", 0),
-                                index + 1
+                                index + 1,
+                                stats.get("profileImageUrl", null)
 //                                null
                         );
                     }
@@ -83,7 +85,7 @@ public class QuizAnswerRepositoryCustomImpl implements QuizAnswerRepositoryCusto
                     logger.info("Fetched user: {}", user);
 
                     String userName = (user != null && user.getName() != null) ? user.getName() : "Unknown";
-                   // String profileImageUrl = (user != null) ? user.getProfileImageUrl() : null;
+                    RelativePath profileImageUrl = (user != null) ? user.getProfileImage() : null;
 
                     logger.info("User name resolved to: {}", userName);
                   //  logger.info("Profile Image URL resolved to: {}", profileImageUrl);
@@ -93,8 +95,9 @@ public class QuizAnswerRepositoryCustomImpl implements QuizAnswerRepositoryCusto
                             userName,
                             stats.getInteger("totalCorrectAnswers", 0),
                             stats.getInteger("totalQuestions", 0),
-                            index + 1
-                     //       profileImageUrl
+                            index + 1,
+                            profileImageUrl
+
                     );
                 })
                 .collect(Collectors.toList());
@@ -149,22 +152,22 @@ public class QuizAnswerRepositoryCustomImpl implements QuizAnswerRepositoryCusto
                     "Unknown",
                     userStats.getInteger("totalCorrectAnswers", 0),
                     userStats.getInteger("totalQuestions", 0),
-                    rank
-//                    null
+                    rank,
+                    null
             );
         }
 
         User user = mongoTemplate.findById(objectId, User.class);
         String userName = (user != null && user.getName() != null) ? user.getName() : "Unknown";
-     //   String profileImageUrl = (user != null) ? user.getProfileImageUrl() : null;
+        RelativePath profileImageUrl = (user != null) ? user.getProfileImage() : null;
 
         return new UserStatsWithUsernameDto(
                 userId,
                 userName,
                 userStats.getInteger("totalCorrectAnswers", 0),
                 userStats.getInteger("totalQuestions", 0),
-                rank
-       //         profileImageUrl
+                rank,
+                profileImageUrl
         );
     }
 

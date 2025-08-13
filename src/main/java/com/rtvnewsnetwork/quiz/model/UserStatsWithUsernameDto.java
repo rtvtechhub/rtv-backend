@@ -1,5 +1,6 @@
 package com.rtvnewsnetwork.quiz.model;
 
+import com.rtvnewsnetwork.config.model.UploadedFile.RelativePath;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public class UserStatsWithUsernameDto {
     private int totalCorrectAnswers;
     private int totalQuestions;
     private int rank;
+    private RelativePath profileImageUrl;
 
 
     //private RelativePath profileImageUrl; // Nullable
@@ -28,7 +30,7 @@ public class UserStatsWithUsernameDto {
         map.put("totalCorrectAnswers", totalCorrectAnswers);
         map.put("totalQuestions", totalQuestions);
         map.put("rank", rank);
-     //   map.put("profileImageUrl", profileImageUrl != null ? profileImageUrl : "");
+        map.put("profileImageUrl", profileImageUrl != null ? profileImageUrl : "");
         return map;
     }
 }

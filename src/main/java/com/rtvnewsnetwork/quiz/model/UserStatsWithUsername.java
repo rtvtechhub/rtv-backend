@@ -1,5 +1,6 @@
 package com.rtvnewsnetwork.quiz.model;
 
+import com.rtvnewsnetwork.config.model.UploadedFile;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,4 +14,6 @@ public class UserStatsWithUsername {
     private int totalCorrectAnswers;
     private int totalQuestions;
     private int rank;
+    private UploadedFile.RelativePath profileImageUrl;
+
 }

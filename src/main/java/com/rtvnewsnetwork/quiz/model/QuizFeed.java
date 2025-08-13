@@ -18,8 +18,9 @@ public class QuizFeed extends QuizModel {
                 quizModel.getQuestions(),
                 quizModel.getStatus(),
                 quizModel.getRewardCoinsPerQuestion(),
-                quizModel.getShare(),
-                quizModel.getShareUrl() != null ? quizModel.getShareUrl() : "defaultShareUrl",
+//                quizModel.getShare(),
+//                quizModel.getShareUrl() != null ? quizModel.getShareUrl() : "defaultShareUrl",
+                quizModel.getQuizType(),
                 quizModel.getCreatedAt(),
                 quizModel.getUpdatedAt()
         );
