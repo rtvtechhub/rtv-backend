@@ -85,7 +85,7 @@ public class QuizAnswerRepositoryCustomImpl implements QuizAnswerRepositoryCusto
                     logger.info("Fetched user: {}", user);
 
                     String userName = (user != null && user.getName() != null) ? user.getName() : "Unknown";
-                   // String profileImageUrl = (user != null) ? user.getProfileImageUrl() : null;
+                    RelativePath profileImageUrl = (user != null) ? user.getProfileImage() : null;
 
                     logger.info("User name resolved to: {}", userName);
                   //  logger.info("Profile Image URL resolved to: {}", profileImageUrl);
@@ -96,8 +96,8 @@ public class QuizAnswerRepositoryCustomImpl implements QuizAnswerRepositoryCusto
                             stats.getInteger("totalCorrectAnswers", 0),
                             stats.getInteger("totalQuestions", 0),
                             index + 1,
-                            stats.get("profileImageUrl", null)
-                     //       profileImageUrl
+                            profileImageUrl
+
                     );
                 })
                 .collect(Collectors.toList());
@@ -153,8 +153,7 @@ public class QuizAnswerRepositoryCustomImpl implements QuizAnswerRepositoryCusto
                     userStats.getInteger("totalCorrectAnswers", 0),
                     userStats.getInteger("totalQuestions", 0),
                     rank,
-                    userStats.get("profileImageUrl", null)
-//                    null
+                    null
             );
         }
 
@@ -168,9 +167,7 @@ public class QuizAnswerRepositoryCustomImpl implements QuizAnswerRepositoryCusto
                 userStats.getInteger("totalCorrectAnswers", 0),
                 userStats.getInteger("totalQuestions", 0),
                 rank,
-                userStats.get("profileImageUrl", null)
-
-       //         profileImageUrl
+                profileImageUrl
         );
     }
 

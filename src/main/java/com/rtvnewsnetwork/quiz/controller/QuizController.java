@@ -76,6 +76,10 @@ public class QuizController implements AuthDetailsHelper {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid input data");
         }
     }
+    @DeleteMapping("/api/quiz/{id}")
+    public QuizModel deleteQuiz(@PathVariable("id") String id) {
+        return quizService.deleteQuiz(id);
+    }
 
 }
 

@@ -1,10 +1,14 @@
 package com.rtvnewsnetwork.quiz.service;
 
 import com.rtvnewsnetwork.common.exception.ResourceNotFoundException;
+import com.rtvnewsnetwork.config.kafka.KafkaTopicConfig;
+import com.rtvnewsnetwork.event.model.EventType;
+import com.rtvnewsnetwork.event.service.EventDataUtil;
+import com.rtvnewsnetwork.event.service.EventPublisher;
+import com.rtvnewsnetwork.event.service.EventService;
 import com.rtvnewsnetwork.quiz.model.*;
 import com.rtvnewsnetwork.quiz.repository.QuizAnswerRepository;
 import com.rtvnewsnetwork.quiz.repository.QuizRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,25 +18,24 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-//public class QuizServiceImpl implements QuizService, EventPublisher {
-    public class QuizServiceImpl implements QuizService {
+    public class QuizServiceImpl implements QuizService, EventPublisher {
 
 
     private  QuizRepository quizRepository;
     private  QuizAnswerRepository quizAnswerRepository;
-//    private final EventService eventService;
+    private  EventService eventService;
 //    private final BranchLinkService branchLinkService;
 
     public QuizServiceImpl(
             QuizRepository quizRepository,
-            QuizAnswerRepository quizAnswerRepository)
-//            EventService eventService,
+            QuizAnswerRepository quizAnswerRepository,
+            EventService eventService )
 //            BranchLinkService branchLinkService
 //    ) {
     {
         this.quizRepository = quizRepository;
         this.quizAnswerRepository = quizAnswerRepository;
-//        this.eventService = eventService;
+        this.eventService = eventService;
 //        this.branchLinkService = branchLinkService;
     }
 
@@ -76,23 +79,23 @@ import java.util.stream.Collectors;
         answer.setShowCoinWonScreen(answer.getTotalCoinsEarned() > 0);
         answer.setSuccessText(generateSuccessText(answer.getCorrectAnswers(), answer.getTotalQuestions()));
 
-        // Check if the user has answered all questions
-//        if (answer.getSelectedAnswers().size() == quizModel.getQuestions().size()) {
-//            Map<String, Object> data = EventDataUtil.createQuizCompletionEventData(
-//                    userId,
-//                    answer.getTotalCoinsEarned()
-//            );
-//            produceEventToKafka(EventType.QUIZ_REWARD, userId, KafkaTopicConfig.GENERIC_EVENT_CHANNEL, data);
-//
-//            if (answer.getTotalCoinsEarned() > 0) {
-//                Map<String, Object> eventData = Map.of(
-//                        "title", "Congratulations! You’ve just won " + answer.getTotalCoinsEarned() + " coins!",
-//                        "description", "Want to win more coins? Keep engaging and play more quizzes!",
-//                        "path", "/quiz-list"
-//                );
-//                produceEventToKafka(EventType.COIN_CREDIT, userId, KafkaTopicConfig.GENERIC_EVENT_CHANNEL, eventData);
-//            }
-//        }
+
+        if (answer.getSelectedAnswers().size() == quizModel.getQuestions().size()) {
+            Map<String, Object> data = EventDataUtil.createQuizCompletionEventData(
+                    userId,
+                    answer.getTotalCoinsEarned()
+            );
+            produceEventToKafka(EventType.QUIZ_REWARD, userId, KafkaTopicConfig.COIN_UPDATES_CHANNEL, data);
+
+            if (answer.getTotalCoinsEarned() > 0) {
+                Map<String, Object> eventData = Map.of(
+                        "title", "Congratulations! You’ve just won " + answer.getTotalCoinsEarned() + " coins!",
+                        "description", "Want to win more coins? Keep engaging and play more quizzes!",
+                        "path", "/quiz-list"
+                );
+                produceEventToKafka(EventType.COIN_CREDIT, userId, KafkaTopicConfig.NOTIFICATIONS_CHANNEL, eventData);
+            }
+        }
 
         return quizAnswerRepository.save(answer);
     }
@@ -216,14 +219,14 @@ import java.util.stream.Collectors;
     public QuizModel createQuiz(QuizModel quizModel) {
         QuizModel response = quizRepository.save(quizModel);
 
-//        Map<String, Object> eventData = Map.of(
-//                "title", "🔥New Quiz Alert!🚀",
-//                "description", response.getQuestions().get(0).getQuestion(),
-//                "path", "/quiz-list"
-//        );
-//
-//        produceEventToKafka(EventType.NEW_POST, null, KafkaTopicConfig.GENERIC_EVENT_CHANNEL, eventData);
-//
+        Map<String, Object> eventData = Map.of(
+                "title", "🔥New Quiz Alert!🚀",
+                "description", response.getQuestions().get(0).getQuestion(),
+                "path", "/quiz-list"
+        );
+
+        produceEventToKafka(EventType.NEW_POST, null, KafkaTopicConfig.NOTIFICATIONS_CHANNEL, eventData);
+
 //        String deepLink = branchLinkService.createBranchLink(response.getId(), "quiz");
 //        if (deepLink != null) {
 //            quizModel.setShareUrl(deepLink);
@@ -237,8 +240,20 @@ import java.util.stream.Collectors;
     }
 
     @Override
+    public QuizModel deleteQuiz(String id) {
+        QuizModel quizModel = quizRepository.findById(id).orElseThrow(()->new RuntimeException("Quiz not found with id: "+id));
+        quizRepository.deleteById(id);
+        return quizModel;
+    }
+
+    @Override
     public void deleteQuizzes(List<String> quizIds) {
         quizRepository.deleteAllById(quizIds);
+    }
+
+    @Override
+    public EventService getEventService() {
+        return eventService;
     }
 }
 

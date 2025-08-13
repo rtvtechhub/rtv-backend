@@ -48,7 +48,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/auth/verifyOtp").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/refresh").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/user").hasAuthority("USER")
+                        .requestMatchers(HttpMethod.GET).permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(
