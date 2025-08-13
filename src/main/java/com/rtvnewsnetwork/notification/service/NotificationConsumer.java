@@ -4,10 +4,10 @@ import com.rtvnewsnetwork.event.model.EventModel;
 import com.rtvnewsnetwork.notification.model.NotificationEventType;
 import com.rtvnewsnetwork.notification.model.NotificationModel;
 import com.rtvnewsnetwork.notification.repository.NotificationRepository;
-import org.joda.time.Instant;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

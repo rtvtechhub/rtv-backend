@@ -73,12 +73,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Object> handleMaxUploadSizeExceededException(
-            MaxUploadSizeExceededException ex, HttpHeaders headers,
-            HttpStatusCode status, WebRequest request) {
+    public final ResponseEntity<Object> handleMaxUploadSizeExceededException(
+            MaxUploadSizeExceededException ex, HttpHeaders headers, HttpStatusCode status,
+            WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(
                 "File size is too large, max allowed: " + maxFileSize,
                 request.getDescription(false));
+
         log.error(exceptionResponse.getMessage(), ex);
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
@@ -105,6 +106,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ExceptionResponse error = new ExceptionResponse(
                 "Validation Failed. " + details,
                 request.getDescription(false));
+
         log.error(error.getMessage(), ex);
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
@@ -119,6 +121,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.error(error.getMessage(), ex);
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
+//	@ExceptionHandler(AccessDeniedException.class)
+//	@ResponseStatus(HttpStatus.FORBIDDEN)
+//	public final ResponseEntity<ExceptionResponse> handleAccessDeniedExceptions(Exception ex,
+//			WebRequest request, HttpServletRequest req) {
+//		ExceptionResponse exceptionResponse = new ExceptionResponse(ex.getMessage(),
+//				request.getDescription(false));
+//
+//		log.error(exceptionResponse.getMessage(), ex);
+//		return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
+//	}
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
