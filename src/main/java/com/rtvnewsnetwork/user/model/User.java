@@ -6,12 +6,14 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -36,10 +38,14 @@ public class User implements UserDetails {
     private Map<String, String> fcmToken = new HashMap<>();
 
     @JsonIgnore
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return authorities.stream()
+                .map(item -> new SimpleGrantedAuthority(item.toString()))
+                .collect(Collectors.toList());
     }
+
 
     @JsonIgnore
     @Override

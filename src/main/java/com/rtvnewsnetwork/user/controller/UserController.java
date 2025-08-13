@@ -14,7 +14,7 @@ public class UserController implements AuthDetailsHelper {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/user/{id}")
+    @GetMapping("/user/{id}")
     public User getUserById(@PathVariable String id) {
         return userService.getUserById(id);
     }

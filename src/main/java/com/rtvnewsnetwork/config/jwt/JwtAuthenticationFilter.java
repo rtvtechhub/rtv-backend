@@ -1,5 +1,6 @@
 package com.rtvnewsnetwork.config.jwt;
 
+import com.rtvnewsnetwork.user.model.User;
 import com.rtvnewsnetwork.user.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -18,6 +19,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -41,8 +43,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             try {
                 Jws<Claims> claims = tokenProvider.parse(jwtToken);
                 String userId = claims.getBody().getSubject(); // Extract user ID from token payload
-                UserDetails userDetails = userService.getUserById(userId);
-
+                User userDetails = userService.getUserById(userId);
+                System.out.println("userdetails: "+userDetails);
+                System.out.println("userdetails.getAuthorities(): "+userDetails.getAuthorities());
                 SecurityContext context = SecurityContextHolder.createEmptyContext();
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 context.setAuthentication(authentication);
