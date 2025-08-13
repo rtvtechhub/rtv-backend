@@ -7,6 +7,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.rtvnewsnetwork.config.util.RelativePathDeserializer;
 import com.rtvnewsnetwork.config.util.RelativePathSerializer;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,7 +18,9 @@ import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.Unwrapped;
 
 import java.time.Instant;
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Document
 public class UploadedFile {
 

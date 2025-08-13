@@ -15,7 +15,7 @@ public class FileProxyController {
 
     private final FileUploadService rtvService;
 
-    @PostMapping("/uploadFile")
+    @PostMapping("/file/upload")
     public ResponseEntity<UploadedFile> uploadFile(
             @RequestParam("file") MultipartFile file) throws Exception {
         return ResponseEntity.ok(rtvService.uploadFile(file));

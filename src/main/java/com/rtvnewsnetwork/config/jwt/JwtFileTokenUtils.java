@@ -30,7 +30,7 @@ public class JwtFileTokenUtils {
 
     public String generateToken() {
         return Jwts.builder()
-                .subject("Kskfjskfaksfjksdf")
+                .subject("rAFJMm7CWCfVtzch3doHgSzTlmPymeauEM23RPLa80FNdKePHkX90aLKvaz8PewZ")
                 .id(UUID.randomUUID().toString())
                 .issuedAt(new Date())
                 .expiration(Date.from(Instant.now().plusSeconds(jwtLifeDuration)))

@@ -32,7 +32,7 @@ public class FileUploadService {
     public UploadedFile uploadFile(MultipartFile file) throws Exception {
         HttpEntity<MultiValueMap<String, Object>> requestEntity = buildMultipartRequest(file);
         ResponseEntity<UploadedFile> response = restTemplate.exchange(
-                fileServiceUrl + "/uploadFile",
+                fileServiceUrl + "/api/file",
                 HttpMethod.POST,
                 requestEntity,
                 UploadedFile.class
