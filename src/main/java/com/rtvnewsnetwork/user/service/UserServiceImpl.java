@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService , UserDetailsService {
             // Retrieve user details by phone number (treated as username)
             UserDetails userDetails = loadUserByUsername(phoneNumber);
             return (User)userDetails ;
-        } catch (UsernameNotFoundException ex) {
+        } catch (Exception e) {
             // Use a default encoded password
             String encodedPassword = defaultPassword;
 
