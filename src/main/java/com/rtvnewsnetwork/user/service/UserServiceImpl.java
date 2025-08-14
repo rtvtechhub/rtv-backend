@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService , UserDetailsService {
 
     @Override
     public User findByPhoneNumber(String phoneNumber) {
-        return null;
+        return userRepository.findByPhoneNumber(phoneNumber).orElse(null);
     }
 
     @Override
